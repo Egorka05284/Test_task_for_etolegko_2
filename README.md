@@ -84,7 +84,7 @@ adrobot/
 1. Склонируйте репозиторий:
 
    ```bash
-   git clone <YOUR_GITHUB_REPOSITORY_URL>
+   git clone https://github.com/Egorka05284/Test_task_for_etolegko_2
    cd adrobot
    ```
 
