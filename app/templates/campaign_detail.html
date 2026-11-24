@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Офферы — {{ campaign.name }}{% endblock %}
+{% block content %}
+<div class="mb-3">
+  <a href="/" class="small text-decoration-none">← Все кампании</a>
+</div>
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+  <div>
+    <h1 class="h3 mb-1">{{ campaign.name }}</h1>
+    <div class="text-secondary small">Keitaro campaign ID: {{ campaign.keitaro_campaign_id }} · Offer flow ID: {{ campaign.offer_stream_id }}</div>
+  </div>
+  <span class="badge rounded-pill text-bg-success">Редактор офферов</span>
+</div>
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+          <h2 class="h5 mb-0">Офферы в потоке</h2>
+          <div class="small text-secondary">Доли трафика должны составлять 100%</div>
+        </div>
+        <div id="offerList" class="vstack gap-2">
+          <div class="text-secondary">Загрузка офферов...</div>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="fw-semibold">Итого</span>
+          <span class="fw-bold" id="shareTotal">—</span>
+        </div>
+        <div class="progress mt-2" style="height: 8px"><div class="progress-bar" id="shareProgress" role="progressbar" style="width: 0%"></div></div>
+        <div class="small mt-2" id="offerMessage" role="status"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Добавить оффер</h2>
+        <label class="form-label" for="newOffer">Оффер из Keitaro</label>
+        <select class="form-select mb-3" id="newOffer"><option value="">Загрузка...</option></select>
+        <button class="btn btn-primary w-100" id="addOfferButton" type="button">Добавить оффер</button>
+        <p class="small text-secondary mt-3 mb-0">При добавлении или удалении доли автоматически выравниваются. Например, 3 оффера получат 34%, 33% и 33%.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  window.ADROBOT_CAMPAIGN_ID = {{ campaign.id }};
+</script>
+<script src="/static/campaign_detail.js"></script>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Кампании — Adrobot{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h1 class="h3 mb-1">Кампании</h1>
+        <p class="text-secondary mb-0">Созданные через Adrobot кампании и импортированные кампании Keitaro.</p>
+      </div>
+      <button class="btn btn-outline-secondary btn-sm" id="reloadCampaigns">Обновить</button>
+    </div>
+    <div id="campaignList" class="d-grid gap-2">
+      {% for campaign in campaigns %}
+      <a class="card card-body campaign-row text-decoration-none" href="/campaigns/{{ campaign.id }}/edit">
+        <div class="d-flex justify-content-between gap-3">
+          <div>
+            <div class="fw-semibold text-dark">{{ campaign.name }}</div>
+            <div class="small text-secondary">Keitaro ID: {{ campaign.keitaro_campaign_id }}{% if campaign.geo_code %} · GEO: {{ campaign.geo_code }}{% endif %}</div>
+          </div>
+          <span class="text-primary">Офферы →</span>
+        </div>
+      </a>
+      {% else %}
+      <div class="card card-body text-secondary" id="emptyCampaigns">Пока нет кампаний. Создайте новую или импортируйте существующую.</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h2 class="h5">Создать кампанию</h2>
+        <p class="small text-secondary">Создаст кампанию в Keitaro и два потока: GEO → Google, остальные → оффер.</p>
+        <form id="createCampaignForm" class="vstack gap-3">
+          <div>
+            <label class="form-label" for="name">Название кампании</label>
+            <input class="form-control" id="name" name="name" required maxlength="255" placeholder="Campaign Australia">
+          </div>
+          <div>
+            <label class="form-label" for="geo">GEO-код</label>
+            <input class="form-control text-uppercase" id="geo" name="geo_code" required minlength="2" maxlength="2" value="AU" placeholder="AU">
+          </div>
+          <div>
+            <label class="form-label" for="domain">Домен</label>
+            <select class="form-select" id="domain" name="domain_id" required><option value="">Загрузка...</option></select>
+          </div>
+          <div>
+            <label class="form-label" for="group">Группа</label>
+            <select class="form-select" id="group" name="group_id" required><option value="">Загрузка...</option></select>
+          </div>
+          <div>
+            <label class="form-label" for="source">Источник</label>
+            <select class="form-select" id="source" name="traffic_source_id" required><option value="">Загрузка...</option></select>
+          </div>
+          <div>
+            <label class="form-label" for="offer">Первоначальный оффер</label>
+            <select class="form-select" id="offer" name="keitaro_offer_id" required><option value="">Загрузка...</option></select>
+          </div>
+          <button class="btn btn-primary" type="submit" id="createButton">Создать кампанию</button>
+          <div class="small" id="createMessage" role="status"></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Импортировать существующую</h2>
+        <p class="small text-secondary">Для редактора кампании, которая уже существует в Keitaro.</p>
+        <form id="importCampaignForm" class="vstack gap-3">
+          <div>
+            <label class="form-label" for="importCampaignId">ID кампании Keitaro</label>
+            <input class="form-control" id="importCampaignId" type="number" min="1" required>
+          </div>
+          <div>
+            <label class="form-label" for="importStreamId">ID потока с офферами <span class="text-secondary">(необязательно)</span></label>
+            <input class="form-control" id="importStreamId" type="number" min="1" placeholder="Определить автоматически">
+          </div>
+          <button class="btn btn-outline-primary" type="submit" id="importButton">Импортировать</button>
+          <div class="small" id="importMessage" role="status"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/campaigns.js"></script>{% endblock %}

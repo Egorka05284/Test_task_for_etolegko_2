@@ -1,0 +1,5 @@
+body { min-height: 100vh; }
+.campaign-row { transition: border-color .15s ease, transform .15s ease; }
+.campaign-row:hover { border-color: #86b7fe; transform: translateY(-1px); }
+.offer-row { border: 1px solid #e5e7eb; border-radius: .65rem; padding: .85rem 1rem; }
+.offer-share { min-width: 4.5rem; text-align: right; font-variant-numeric: tabular-nums; }
